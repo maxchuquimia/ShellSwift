@@ -15,12 +15,6 @@ extension URL: ExpressibleByStringLiteral {
     }
 }
 
-//precedencegroup PipeOperatorPrecedence {
-//    associativity: left
-//}
-
-//infix operator |: PipeOperatorPrecedence
-
 @discardableResult
 func |<X,Y>(a: () -> X, b: (X) -> (Y)) -> Y { b(a()) }
 

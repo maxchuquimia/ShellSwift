@@ -7,8 +7,8 @@
 
 import Foundation
 
-public func cat(_ a: URL) throws -> String { try cat()(a) }
+public func cat(_ a: URL) throws -> Data { try cat()(a) }
 
-public func cat() -> (URL) throws -> String {{
+public func cat() -> (URL) throws -> Data {{
     try Data(contentsOf: $0)
 }}

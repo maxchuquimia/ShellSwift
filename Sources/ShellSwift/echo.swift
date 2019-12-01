@@ -7,31 +7,6 @@
 
 import Foundation
 
-//private struct echo: Pipeable {
-//    typealias Input = Any
-//    typealias Output = String
-//
-//    let n: Bool
-//
-//    init(n: Bool = false) {
-//        self.n = n
-//    }
-//
-//    func echo(_ a: Any) -> String {
-//        let suffix = n ? "" : "\n"
-//
-//        if let a = a as? [Any] {
-//            return a.reduce("", { $0 + "\($1)" + suffix})
-//        } else {
-//            return "\(a)" + suffix
-//        }
-//    }
-//
-//    func pipe(_ x: echo.Input) throws -> echo.Output {
-//        echo(x)
-//    }
-//}
-
 public func echo(_ a: Any) -> String { echo()(a) }
 
 public func echo(n: Bool = false) -> (Any) -> String {{
@@ -42,7 +17,7 @@ public func echo(n: Bool = false) -> (Any) -> String {{
         return a.map { "\($0)" }.joined(separator: isf) + suffix
     }
     if let a = $0 as? Data {
-        return String(data: a, encoding: .utf8)
+        return String(data: a, encoding: .utf8) ?? "\(a)"
     } else {
         return "\($0)" + suffix
     }
@@ -59,22 +34,3 @@ public func echo(n: Bool = false) -> ((String) -> Void) {{
     let s: String = echo(n: n)($0)
     print(s, terminator: "")
 }}
-
-//func echo(_ options: EchoOptions...) -> (Any) -> String {
-//    ECHO(
-//        n: options.contains(.n)
-//    ).echo
-//}
-//
-//func echo(_ a: Any) -> String {
-//    ECHO(
-//        n: false
-//    )
-//    .echo(a)
-//}
-
-// Special
-//func echo(_ a: Any) {
-//    let s: String = echo(a)
-//    print(s)
-//}
