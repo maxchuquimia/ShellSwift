@@ -16,13 +16,13 @@ extension URL: ExpressibleByStringLiteral {
 }
 
 @discardableResult
-func |<X,Y>(a: () -> X, b: (X) -> (Y)) -> Y { b(a()) }
+public func |<X,Y>(a: () -> X, b: (X) -> (Y)) -> Y { b(a()) }
 
 @discardableResult
-func |<X,Y>(a: X, b: (X) -> (Y)) -> Y { b(a) }
+public func |<X,Y>(a: X, b: (X) -> (Y)) -> Y { b(a) }
 
-func |<X>(a: X, b: (X) -> ()) { b(a) }
+public func |<X>(a: X, b: (X) -> ()) { b(a) }
 
-func >(a: String, b: URL) throws {
+public func >(a: String, b: URL) throws {
     try a.data(using: .utf8)?.write(to: b)
 }
