@@ -3,13 +3,12 @@ import XCTest
 
 final class ShellSwiftTests: XCTestCase {
 
-    func testExample() {
+    func testWritingAndReading() {
 
         let originalPath = URL("test")
         let newPath = URL("test2")
 
         do {
-
             echo(n: true)("This is a test")
 
             try cd("/tmp")
@@ -34,7 +33,38 @@ final class ShellSwiftTests: XCTestCase {
         }
     }
 
+    func testConversions() {
+        do {
+            struct Model: Decodable {
+                let a: Int
+            }
+
+            let model = try echo("{\"a\":12}") | Data.new() | JSONDecoder().decode(Model.self)
+            XCTAssertEqual(model.a, 12)
+
+            XCTAssertEqual(try Data(base64Encoded: "aGVsbG8=")! | String.new(), "hello")
+
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
+
+    func testCurl() {
+        do {
+            struct Model: Decodable {
+                let id: Int
+            }
+
+            let model = try curl("https://jsonplaceholder.typicode.com/todos/1") | JSONDecoder().decode(Model.self)
+            XCTAssertEqual(model.id, 1)
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
+
     static var allTests = [
-        ("testExample", testExample),
+        ("testWritingAndReading", testWritingAndReading),
+        ("testConversions", testConversions),
+        ("testCurl", testCurl),
     ]
 }
