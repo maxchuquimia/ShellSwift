@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Cocoa
 
 public extension String {
 
@@ -25,6 +26,15 @@ public extension Data {
         }
         return data
     }}
+
+    static func new() -> (NSImage) throws -> Data {{
+        guard let tiffRepresentation = $0.tiffRepresentation,
+            let bitmapImage = NSBitmapImageRep(data: tiffRepresentation),
+            let png = bitmapImage.representation(using: .png, properties: [:]) else {
+                throw "Cannot convert '\($0)' to Data"
+        }
+        return png
+    }}
 }
 
 public extension JSONDecoder {
@@ -40,3 +50,21 @@ public extension JSONEncoder {
         try self.encode($0)
     }}
 }
+
+public extension NSImage {
+
+    static func new() -> (Data) throws -> NSImage {{
+        guard let image = NSImage(data: $0) else {
+            throw "Cannot convert '\($0)' to NSImage"
+        }
+        return image
+    }}
+
+    static func new() -> (URL) throws -> NSImage {{
+        guard let image = NSImage(contentsOf: $0) else {
+            throw "Cannot get NSImage from '\($0)'"
+        }
+        return image
+    }}
+}
+

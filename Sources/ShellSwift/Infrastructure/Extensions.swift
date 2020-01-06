@@ -2,6 +2,8 @@ import Foundation
 
 extension String: LocalizedError {
     public var errorDescription: String? { self }
+
+    var url: URL { URL(fileURLWithPath: self) }
 }
 
 extension URL: ExpressibleByStringLiteral {

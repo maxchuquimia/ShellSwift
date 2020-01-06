@@ -24,3 +24,7 @@ public func |<X>(a: X, b: (X) throws -> ()) rethrows {
 public func >(a: String, b: URL) throws {
     try a.data(using: .utf8)?.write(to: b)
 }
+
+public func >(a: Data, b: URL) throws {
+    try a.write(to: b)
+}

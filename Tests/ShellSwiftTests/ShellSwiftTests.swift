@@ -62,6 +62,19 @@ final class ShellSwiftTests: XCTestCase {
         }
     }
 
+    func testShell() {
+        do {
+            let output = try shell("echo x")
+            XCTAssertEqual(output, "x\n")
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
+
+    func testShellFails() {
+        XCTAssertThrowsError(try shell("test"))
+    }
+
     static var allTests = [
         ("testWritingAndReading", testWritingAndReading),
         ("testConversions", testConversions),
